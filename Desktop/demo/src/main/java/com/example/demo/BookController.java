@@ -2,10 +2,7 @@ package com.example.demo;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class BookController {
@@ -24,19 +21,21 @@ public class BookController {
         return new ResponseEntity<>(message, HttpStatus.CREATED);
     }
 
+    @GetMapping("/get-highest-number-of-pages-book")
     public ResponseEntity getHighestNumberPagesBook(){
         String bookName = bookService.getHighestNumberPagesBook();
         return new ResponseEntity<>(bookName, HttpStatus.CREATED);
     }
 
-
-    public ResponseEntity updateBookPages(String bookName, int extraPages){
+    @PostMapping("/update-book-pages")
+    public ResponseEntity updateBookPages(@RequestParam("bookName") String bookName, @RequestParam("extraPages") int extraPages){
         bookService.updateBookPages(bookName, extraPages);
         return new ResponseEntity<>("Pages Updated Successfully", HttpStatus.CREATED);
     }
 
 
-    public ResponseEntity findTopRatedBooks(int ratings){
+    @GetMapping("/get-top-rated-books")
+    public ResponseEntity findTopRatedBooks(@RequestParam("ratings") int ratings){
         int books = bookService.findTopRatedBooks(ratings);
         return new ResponseEntity<>(books, HttpStatus.CREATED);
     }
